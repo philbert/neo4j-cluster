@@ -14,6 +14,7 @@ Vagrant.configure('2') do |config|
     node1.vm.network :private_network, ip: "172.16.0.4"
     node1.vm.hostname = 'node1.localnet'
     node1.vm.provision "shell", inline: "sudo sed -i 's/^#ha.server_id=/ha.server_id=1/g' /etc/neo4j/neo4j.properties"
+    node1.vm.synced_folder "./graph.db/", "/var/lib/neo4j/data/graph.db", type: "rsync", rsync__args: "-zvrd", owner: "neo4j", group: "nogroup"
     node1.vm.provider :virtualbox do |vbox|
       vbox.customize ["modifyvm", :id, "--memory", "512"]
     end
@@ -24,6 +25,7 @@ Vagrant.configure('2') do |config|
     node2.vm.network :private_network, ip: "172.16.0.5"
     node2.vm.hostname = 'node2.localnet'
     node2.vm.provision "shell", inline: "sudo sed -i 's/^#ha.server_id=/ha.server_id=2/g' /etc/neo4j/neo4j.properties"
+    node2.vm.synced_folder "./graph.db/", "/var/lib/neo4j/data/graph.db", type: "rsync", rsync__args: "-zvrd", owner: "neo4j", group: "nogroup"
     node2.vm.provider :virtualbox do |vbox|
       vbox.customize ["modifyvm", :id, "--memory", "512"]
     end
@@ -34,6 +36,7 @@ Vagrant.configure('2') do |config|
     node3.vm.network :private_network, ip: "172.16.0.6"
     node3.vm.hostname = 'node3.localnet'
     node3.vm.provision "shell", inline: "sudo sed -i 's/^#ha.server_id=/ha.server_id=3/g' /etc/neo4j/neo4j.properties"
+    node3.vm.synced_folder "./graph.db/", "/var/lib/neo4j/data/graph.db", type: "rsync", rsync__args: "-zvrd", owner: "neo4j", group: "nogroup"
     node3.vm.provider :virtualbox do |vbox|
       vbox.customize ["modifyvm", :id, "--memory", "512"]
     end
